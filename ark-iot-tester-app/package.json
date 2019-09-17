@@ -1,0 +1,23 @@
+{
+  "name": "ark-iot-unit-tester",
+  "version": "1.0.0",
+  "description": "Ark Ecosystem IoT Unit Tester",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ciband/ark-iot-tester.git"
+  },
+  "author": "Chris Johnson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ciband/ark-iot-tester/issues"
+  },
+  "homepage": "https://github.com/ciband/ark-iot-tester#readme",
+  "devDependencies": {
+    "electron": "^6.0.9"
+  }
+}
