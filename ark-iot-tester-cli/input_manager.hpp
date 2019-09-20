@@ -7,14 +7,14 @@
 
 #include "types.hpp"
 
-namespace Ark { 
+namespace Ark {
 namespace IoT {
 namespace Tester {
 
 class input_manager {
 public:
     input_manager() = default;
-    
+
     supported_repos get_repo_to_test() {
         std::cout << "Welcome to the Ark Ecosystem IoT Tester\n"
                   << "Please select a repository to test:\n\n";
@@ -23,7 +23,7 @@ public:
                   << "2: Cpp-Client\n";
 
         std::cout << "Enter selection: ";
-        supported_repos_int_type selection;
+        int selection;
         std::cin >> selection;
         const auto selected_repo = static_cast<supported_repos>(selection);
         switch (static_cast<supported_repos>(selection)) {
@@ -43,7 +43,7 @@ public:
                   << "2: Pull Request\n\n";
 
         std::cout << "Enter selection: ";
-        supported_test_types_int_type selection;
+        int selection;
         std::cin >> selection;
         const auto selected_test_type = static_cast<supported_test_types>(selection);
         switch (static_cast<supported_test_types>(selection)) {
@@ -52,7 +52,7 @@ public:
                 return selected_test_type;
 
             default:
-                throw std::runtime_error("Invalid repo selected");
+                throw std::runtime_error("Invalid test item selected");
         }
     }
 
@@ -68,7 +68,7 @@ public:
         std::cout << "Enter selection: ";
         std::cin >> i;
 
-        if (i <= test_item_list.size()) {
+        if (i >= test_item_list.size()) {
             throw std::runtime_error("Invalid index into branch/pr list");
         }
         return test_item_list[i];

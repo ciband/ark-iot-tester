@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <type_traits>
 
-namespace Ark { 
+namespace Ark {
 namespace IoT {
 namespace Tester {
 
@@ -24,8 +24,8 @@ inline const char* const to_string(supported_repos repo) {
 }
 
 enum class supported_test_types : uint8_t {
-    branch,
-    pr
+    branch = 1,
+    pr = 2
 };
 
 typedef std::underlying_type<supported_test_types>::type supported_test_types_int_type;

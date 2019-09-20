@@ -1,0 +1,15 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "ark_iot_tester_cli_debug",
+            "command": "cmake -DCMAKE_BUILD_TYPE=Debug .. && cmake --build .",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}/ark-iot-tester-cli/build"
+            },
+            "problemMatcher": []
+        },
+    ],
+    "version": "2.0.0"
+}

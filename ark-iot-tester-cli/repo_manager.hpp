@@ -12,7 +12,7 @@ namespace fs = std::experimental::filesystem;
 #include "types.hpp"
 #include "utils.hpp"
 
-namespace Ark { 
+namespace Ark {
 namespace IoT {
 namespace Tester {
 
@@ -24,9 +24,15 @@ private:
 
 public:
     repo_manager() : working_dir(base_temp_dir / fs::path("ark-iot-test")) {
-        if (!fs::create_directory(working_dir)) {
+        cleanup();
+
+        if (!fs::create_directories(working_dir)) {
             throw std::runtime_error("Unable to create working directory");
         }
+    }
+
+    ~repo_manager() {
+        cleanup();
     }
 
     void clone_repo(supported_repos repo) {
@@ -53,9 +59,9 @@ public:
         fetch_cmd << "cd " << working_dir << " && git branch --all";
         output = exec(fetch_cmd.str());
         std::vector<std::string> branches = split(output, '\n');
-        
+
         for (auto it = branches.begin(); it != branches.end(); ++it) {
-            if (!it->contains("remotes/origin/") || it->contains("remotes/origin/HEAD")) {
+            if (it->find("remotes/origin/") == std::string::npos || it->find("remotes/origin/HEAD") != std::string::npos) {
                 branches.erase(it--);
             }
         }
@@ -73,7 +79,20 @@ public:
         std::ostringstream build_cmd;
         build_cmd << "cd " << working_dir << " && pio run";
         const auto output = exec(build_cmd.str());
-        //TODO: validate good build
+        //TODO: fix validate good build
+        if (output.find("Environment esp8266     [SUCCESS]") == std::string::npos ||
+            output.find("Environment esp32       [SUCCESS]") == std::string::npos /*||
+            output.find("Environment atmega32p   [SUCCESS]", pos) == std::string::npos ||
+            output.find("Environment m4          [SUCCESS]", pos) == std::string::npos*/) {
+                throw std::runtime_error("Build Failed");
+        }
+    }
+
+private:
+    void cleanup() {
+        if (fs::exists(working_dir)) {
+            fs::remove_all(working_dir);
+        }
     }
 };
 
