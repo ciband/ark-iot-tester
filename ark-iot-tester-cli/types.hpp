@@ -15,6 +15,14 @@ enum class supported_repos : uint8_t {
 
 typedef std::underlying_type<supported_repos>::type supported_repos_int_type;
 
+inline const char* const to_string(supported_repos repo) {
+    switch(repo) {
+        case supported_repos::Cpp_Crypto: return "cpp-client";
+        case supported_repos::Cpp_Client: return "cpp-crypto";
+        default: throw std::runtime_error("to_string - Invalid repo given");
+    }
+}
+
 enum class supported_test_types : uint8_t {
     branch,
     pr
